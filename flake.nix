@@ -78,7 +78,7 @@
               nativeBuildInputs = [ pkgs.cmake ];
               # clang doesn't handle -fext-numeric-literals, so we only want it for gcc
               # On the other hand, clang doesn't like implicit conversions
-              CXXFLAGS = if builtins.elem system ["x86_64-linux" "aarch64-linux"] then "-fext-numeric-literals" else "-fpermissive -fheinous-gnu-extensions";
+              CXXFLAGS = if builtins.elem system ["x86_64-linux" "aarch64-linux"] then "-fext-numeric-literals" else "";
               #use nix-provided cjson rather than downloading a new copy
               patchPhase = ''
                 sed -i '29,34d' CMakeLists.txt
@@ -110,8 +110,6 @@
                 substituteInPlace $out/include/binsparse/write_matrix.h --replace 'cJSON/' 'cjson/'
               '';
             })
-
-            pkgs.zsh
           ];
         };
       });
